@@ -15,9 +15,10 @@ dotenv.config();
 
 const app = express();
 const bd = new Map();
+const origin = ['https://vlad32-creator.github.io','http://localhost:5173'];
 
 app.use(cors({
-    origin: ['https://vlad32-creator.github.io','http://localhost:5173'],
+    origin: origin,
     credentials: true
 }));
 app.use(cookieParser());
@@ -36,10 +37,9 @@ app.post('/login', checkLogin(bd));
 
 app.post('/changeName', changeName(bd));
 
-app.get('/users', (req, res) => {
-    console.log(bd);
-    res.send(bd);
-})
+app.get('/ping',(req,res,next) => {
+    res.send('pong');
+});
 
 app.post('/message',message(bd));
 app.get('/getMessage',getMessage(bd));

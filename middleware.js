@@ -197,7 +197,10 @@ export function checkTransfer(bd) {
                 return res.status(401).json({ Error: `Enter recipient card` });
             } if (!money) {
                 return res.status(401).json({ Error: `Enter how mach money do you wont to transfer` });
-            } if (money && recipientCard) {
+            }if (userEntry[1].money - money < 0) {
+                return res.json({Error: 'You can`t send more then you have'});
+            }
+             if (money && recipientCard) {
                 if (!bd.has(recipientCard)) {
                     errors.card = `Cannot find recipient Card`;
                     return res.status(400).json({ errors });
